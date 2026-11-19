@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VICE SUNSET Cover Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell" id="editor">
+  <header class="masthead">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+      <div class="brand-text">
+        <strong>VICE SUNSET</strong>
+        <span>Cover Studio</span>
+      </div>
+    </div>
+    <div class="masthead-meta">
+      <span class="meta-pill"><i class="dot"></i> Issue 01 · Offline studio</span>
+      <span class="meta-note">Photos never leave your machine</span>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="rail" aria-label="Cover controls">
+      <section class="panel-section" id="photo-drop">
+        <div class="section-head">
+          <h2>Photos</h2>
+          <span class="section-hint" id="photo-count">0 photos</span>
+        </div>
+        <label class="drop-zone" for="photo-input">
+          <span class="drop-icon" aria-hidden="true"></span>
+          <span class="drop-title">Drop photos here</span>
+          <span class="drop-sub">JPG, PNG or WebP · multi-select works</span>
+        </label>
+        <input id="photo-input" class="visually-hidden" type="file" accept="image/*" multiple>
+        <div class="thumb-row" id="photo-thumbs" aria-label="Loaded photos"></div>
+        <div class="target-row">
+          <span class="target-label">Send to</span>
+          <div class="chip-row" id="panel-targets"></div>
+        </div>
+        <p class="micro-copy">Pick a panel, then a photo. Choose “All panels” to reuse one shot across the whole wall.</p>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head">
+          <h2>Layout</h2>
+          <span class="section-hint">6 walls</span>
+        </div>
+        <div class="tile-grid layout-grid" id="layout-grid" role="group" aria-label="Panel layouts"></div>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head">
+          <h2>Grade</h2>
+          <span class="section-hint">5 looks</span>
+        </div>
+        <div class="tile-grid grade-grid" id="grade-grid" role="group" aria-label="Colour grades"></div>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head">
+          <h2>Crop</h2>
+          <span class="section-hint">Drag the cover to pan</span>
+        </div>
+        <div class="field">
+          <div class="field-line">
+            <label for="crop-zoom">Zoom</label>
+            <span class="value" id="crop-zoom-value">1.00x</span>
+          </div>
+          <input id="crop-zoom" type="range" min="1" max="3.5" step="0.01" value="1">
+        </div>
+        <div class="field">
+          <div class="field-line">
+            <label for="crop-rotate">Rotate</label>
+            <span class="value" id="crop-rotate-value">0°</span>
+          </div>
+          <input id="crop-rotate" type="range" min="-45" max="45" step="1" value="0">
+        </div>
+        <button type="button" class="ghost-button" id="crop-reset">Reset all crops</button>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head">
+          <h2>Caption</h2>
+          <span class="section-hint">Anton display</span>
+        </div>
+        <div class="field">
+          <label for="headline">Headline</label>
+          <input id="headline" type="text" maxlength="40" spellcheck="false" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="subline">Subline</label>
+          <input id="subline" type="text" maxlength="64" spellcheck="false" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="kicker">Kicker</label>
+          <input id="kicker" type="text" maxlength="48" spellcheck="false" autocomplete="off">
+        </div>
+        <div class="field">
+          <div class="field-line">
+            <label for="headline-size">Headline size</label>
+            <span class="value" id="headline-size-value">12%</span>
+          </div>
+          <input id="headline-size" type="range" min="0.07" max="0.2" step="0.005" value="0.125">
+        </div>
+        <div class="field">
+          <div class="field-line">
+            <label for="headline-color">Caption colour</label>
+            <span class="value">Ink on cream</span>
+          </div>
+          <div class="colour-row">
+            <input id="headline-color" type="color" value="#f6ead6" aria-label="Caption colour">
+            <div class="swatch-row" role="group" aria-label="Caption colour presets">
+              <button type="button" class="swatch" data-color="#f6ead6" style="--swatch:#f6ead6" aria-label="Cream"></button>
+              <button type="button" class="swatch" data-color="#ffe2b0" style="--swatch:#ffe2b0" aria-label="Warm cream"></button>
+              <button type="button" class="swatch" data-color="#ff8fb8" style="--swatch:#ff8fb8" aria-label="Pink"></button>
+              <button type="button" class="swatch" data-color="#8cf0e2" style="--swatch:#8cf0e2" aria-label="Aqua"></button>
+              <button type="button" class="swatch" data-color="#ffd34d" style="--swatch:#ffd34d" aria-label="Gold"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head">
+          <h2>Note</h2>
+          <label class="switch">
+            <input id="note-toggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+            <span class="switch-label">Sticky note</span>
+          </label>
+        </div>
+        <div class="field is-off" id="note-field">
+          <label for="note-text">Handwritten note</label>
+          <textarea id="note-text" rows="2" maxlength="80" spellcheck="false"></textarea>
+          <p class="micro-copy">Caveat lettering on a tilted paper chip, pinned to the top-right corner.</p>
+        </div>
+      </section>
+
+      <section class="panel-section export-section">
+        <div class="section-head">
+          <h2>Export</h2>
+          <span class="section-hint">PNG · exact size</span>
+        </div>
+        <div class="export-grid" id="export-buttons"></div>
+        <p class="micro-copy">Rendered fresh at full resolution for each download.</p>
+      </section>
+    </aside>
+
+    <section class="preview-column" aria-label="Cover preview">
+      <div class="preview-topline">
+        <div class="preview-labels">
+          <span class="preview-eyebrow">Live cover preview</span>
+          <span class="preview-sub" id="stage-caption">1080 × 1350 · Hero &amp; Stack · Vice Sunset</span>
+        </div>
+        <div class="preview-actions">
+          <button type="button" class="ghost-button small" id="preview-reset">Reset crops</button>
+        </div>
+      </div>
+      <div class="stage" id="stage">
+        <canvas id="cover-canvas" width="1080" height="1350" aria-label="Live GTA-style cover preview"></canvas>
+        <span class="stage-corner tl" aria-hidden="true"></span>
+        <span class="stage-corner tr" aria-hidden="true"></span>
+        <span class="stage-corner bl" aria-hidden="true"></span>
+        <span class="stage-corner br" aria-hidden="true"></span>
+      </div>
+      <div class="preview-footer">
+        <span>Drag on a panel to pan · Scroll to zoom</span>
+        <span class="footer-clock">VICE SUNSET / COVER No. 01</span>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
